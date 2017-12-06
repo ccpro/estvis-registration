@@ -1,0 +1,7 @@
+div.border {
+    width: 115px;
+    padding: 10px;
+    border: 2px solid rgb(7, 6, 6);
+    border-radius: 15px;
+    -moz-border-radius: 15px;
+}

@@ -1,0 +1,10 @@
+.nav-link {
+  cursor:pointer;
+}
+div.border
+{
+padding: 10px;
+border: 2px solid #000;
+border-radius: 15px;
+-moz-border-radius: 15px;
+}
