@@ -7,13 +7,18 @@
     </div>
 
     <div class="container page">
-        <div class="border">
-            <!-- <div class="row">
+        <!-- <div class="row">
                 <label>
               company name: <input type="text" name="companyName" length="120" />
             </label>
             </div> -->
-            <form [formGroup]="rForm" (ngSubmit)="saveInfo(rForm.value)">
+        <form [formGroup]="rForm" (ngSubmit)="saveInfo(rForm.value)">
+            <div class="border">
+
+                <div class="form-container">
+                    <h2>company info</h2>
+                </div>
+
                 <table border="0" colspacing="1" cellpadding="3" width="100%">
                     <tr>
                         <td align='right' width="30%"><label>company name :</label></td>
@@ -48,10 +53,21 @@
                         <td align='right'><label>email :</label></td>
                         <td><input type="text" formControlName="companyEmail" /></td>
                     </tr>
+                    <tr>
+                        <td align='right'><label>insurance :</label></td>
+                        <td>
+                            <select formControlName='companyInsurance' ngModel>
+                            <option *ngFor="let insurance of insurances" value={{insurance.id}}>
+                              {{insurance.name}}
+                            </option>
+                          </select>
+                        </td>
+                    </tr>
                 </table>
-                <p>Form value: {{ rForm.value | json }}</p>
-                <p>Form status: {{ rForm.status | json }}</p>
-            </form>
-        </div>
+            </div>
+            <input type="submit" class="button expanded" value="send registration" [disabled]="!rForm.valid">
+            <p>Form value: {{ rForm.value | json }}</p>
+            <p>Form status: {{ rForm.status | json }}</p>
+        </form>
     </div>
 </div>

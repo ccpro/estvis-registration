@@ -1,6 +1,6 @@
 export class FormData {
 	companyInfo: CompanyInfo;
-	
+
 }
 
 export class CompanyInfo {
@@ -13,6 +13,16 @@ export class CompanyInfo {
 }
 
 export class UserInfo {
-    name: string = '';
-    email: string = '';
+	name = '';
+	email = '';
+}
+
+export class InsuranceInfo {
+	id: number;
+	name: string;
+
+	constructor(id: number, name: string) {
+		this.id = id;
+		this.name = name;
+	}
 }

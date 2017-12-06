@@ -3,6 +3,8 @@ import { Router } from '@angular/router';
 import { FormsModule, FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 
+import { InsuranceInfo } from '../data/formData.model';
+
 @Component({
   selector: 'app-home-page',
   templateUrl: './home.component.html',
@@ -23,6 +25,13 @@ export class HomeComponent {
   companyFax = '';
   companyEmail = '';
 
+  selectedInsurance: InsuranceInfo;
+  insurances = [
+    new InsuranceInfo(1, '1111'),
+    new InsuranceInfo(2, '3333'),
+    new InsuranceInfo(3, '4444'),
+  ];
+
   constructor(
     private router: Router,
     private fb: FormBuilder
@@ -37,7 +46,8 @@ export class HomeComponent {
       'companyAdminName': ['', Validators.required],
       'companyPhone': ['', Validators.required],
       'companyFax': ['', Validators.required],
-      'companyEmail': ['', Validators.email]
+      'companyEmail': ['', Validators.email],
+      'companyInsurance': ['', Validators.required]
     });
   }
 
