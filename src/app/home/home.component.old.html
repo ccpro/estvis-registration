@@ -115,15 +115,16 @@
                                         <div class="form-group">
                                             <label for="formRoles">roles *</label>
                                             <div *ngIf="formRoles">
-                                                <div *ngFor="let role of formRoles; let c = index" class="checkbox">
+                                                <div *ngFor="let role of formRoles; let c = index" 
+                                                      class="checkbox">
                                                     <label for="role">
                                                         <input type="checkbox" 
                                                                value="{{role.id}}" 
                                                                name="{{role.id}}" 
-                                                               (change)="updateRole(i, c, role.id, $event.target.checked)"                                                               
-                                                               [formControl]="rForm.controls.users.controls[i].controls.roles.controls[role.id]"/> {{role.comment}}
+                                                               (change)="updateRole(i, c, role.id, $event.target.checked)"
+                                                               [formControl]="roleGroup.controls[role.name]"/> {{role.comment}}
                                                      </label>
-                                                </div>
+                                                 </div>
                                             </div>
                                         </div>
                                     </td>

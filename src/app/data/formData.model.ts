@@ -1,6 +1,5 @@
 export class FormData {
 	companyInfo: CompanyInfo;
-
 }
 
 export class CompanyInfo {
@@ -10,19 +9,29 @@ export class CompanyInfo {
 	phone: string = '';
 	email: string = '';
 	fax: string = '';
+	insurance_group_id = 0;
+	users: UserInfo[];
+}
+
+export class RoleInfo {
+	id: number;
+	name: string;
+	comment: string;
 }
 
 export class UserInfo {
 	name = '';
 	email = '';
+	roles: number[];
 }
 
-export class InsuranceInfo {
+export interface InsuranceInfo {
 	id: number;
 	name: string;
+	is_default: boolean;
+}
 
-	constructor(id: number, name: string) {
-		this.id = id;
-		this.name = name;
-	}
+export class ConfigInfo {
+	list: InsuranceInfo[];
+	roles: RoleInfo[];
 }

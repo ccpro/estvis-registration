@@ -6986,7 +6986,7 @@ ul.tag-list li {
     font-size: 1.5rem !important;
     padding-top: 0rem !important;
     margin-right: 1rem !important;
-    color: #ffa500 !important;
+    color: #ffa200 !important;
 }
 
 .nav-link .user-pic {
@@ -7341,4 +7341,12 @@ footer .attribution {
     font-size: 0.6rem;
     margin-right: 5px;
     cursor: pointer;
+}
+
+.roundbutton {
+    display: block;
+    height: 30px;
+    width: 30px;
+    border-radius: 50%;
+    border: 1px solid red;
 }

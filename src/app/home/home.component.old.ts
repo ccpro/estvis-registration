@@ -24,6 +24,7 @@ import {
 import { EvService } from '../ev.service';
 import { UserComponent } from '../user/user.component';
 
+
 @Component({
   selector: 'app-home-page',
   templateUrl: './home.component.html',
@@ -39,6 +40,7 @@ export class HomeComponent implements OnInit {
   isLoading = true;
 
   rForm: FormGroup;
+  roleGroup: FormGroup;
   post: any;
 
   //
@@ -54,6 +56,7 @@ export class HomeComponent implements OnInit {
   constructor(private router: Router,
     private fb: FormBuilder,
     private evService: EvService) {
+    // YP this.createForm();
   }
 
   ngOnInit() {
@@ -64,7 +67,7 @@ export class HomeComponent implements OnInit {
     this.evService
       .getInsuranceList()
       .subscribe(
-         /* happy path */ l => this.createFormEx(l),
+         /* happy path */ l => this.createFormEx(l), // YP this.updateValues(l),
          /* error path */ e => this.errorMessage = e,
          /* onCompleted */() => this.isLoading = false);
   }
@@ -105,16 +108,23 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  buildRolesControls(): any {
+    const rv: any = [];
+    this.formRoles.forEach(r => rv.push({ key: r.name, control: new FormControl('') }));
+    return rv;
+  }
+
   initUser() {
-
-    const roleGroup = new FormGroup({});
-    this.formRoles.forEach(r => roleGroup.addControl(r.id + '', new FormControl('')));
-
     const rv = this.fb.group({
       name: ['', Validators.required],
       email: ['', Validators.email],
-      roles: roleGroup
+      roles: this.fb.array([])
     });
+
+    const roleGroup = new FormGroup({});
+    this.formRoles.forEach(r => roleGroup.addControl(r.name, new FormControl('')));
+    rv.addControl('roles', roleGroup);
+
     return rv;
   }
 
@@ -126,7 +136,11 @@ export class HomeComponent implements OnInit {
     const roles = <FormArray>userRoles.controls.roles;
     console.log(roles);
 
-    roles[roleIndex] = (checked) ? roleId : 0;
+    if (checked) {
+      roles[roleIndex] = roleId;
+    } else {
+      roles[roleIndex] = 0;
+    }
 
     console.log(roles);
   }
