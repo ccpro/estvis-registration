@@ -7,6 +7,8 @@ import { HomeComponent } from './home.component';
 import { UserComponent } from '../user/user.component';
 import { EvService } from '../ev.service';
 
+import { EqualValidator } from '../data/equal-validator.directive';
+
 const homeRouting: ModuleWithProviders = RouterModule.forChild([
   {
     path: '',
@@ -22,7 +24,8 @@ const homeRouting: ModuleWithProviders = RouterModule.forChild([
     CommonModule
   ],
   declarations: [
-    HomeComponent
+    HomeComponent,
+    EqualValidator
   ],
   providers: [EvService]
 })

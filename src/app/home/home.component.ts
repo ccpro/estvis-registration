@@ -1,26 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Event } from '@angular/router/src/events';
-import {
-  Component,
-  OnInit
-} from '@angular/core';
-import {
-  FormArray,
-  FormControl
-} from '@angular/forms';
-import {
-  FormsModule,
-  FormBuilder,
-  FormGroup,
-  Validators,
-  ReactiveFormsModule
-} from '@angular/forms';
-import {
-  InsuranceInfo,
-  RoleInfo,
-  UserInfo
-} from '../data/formData.model';
+import { Component, OnInit } from '@angular/core';
+import { FormArray, FormControl } from '@angular/forms';
+import { FormsModule, FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { InsuranceInfo, RoleInfo, UserInfo } from '../data/formData.model';
 import { EvService } from '../ev.service';
 import { UserComponent } from '../user/user.component';
 
@@ -37,6 +21,7 @@ export class HomeComponent implements OnInit {
   selectedInsurance: number;
   errorMessage = '';
   isLoading = true;
+  wasUploaded = false;
 
   rForm: FormGroup;
   post: any;
@@ -50,6 +35,8 @@ export class HomeComponent implements OnInit {
   companyPhone = '';
   companyFax = '';
   companyEmail = '';
+  adminPwd = '';
+  adminCnfrmPwd = '';
 
   constructor(private router: Router,
     private fb: FormBuilder,
@@ -73,8 +60,6 @@ export class HomeComponent implements OnInit {
     this.insurances = v.list;
     this.formRoles = v.roles;
 
-    console.log(this.formRoles);
-
     for (let i = 0; i < this.insurances.length; ++i) {
       if (0 === this.insurances[i].id) {
         this.insurances[i].name = '-- please choose insurance group --';
@@ -95,12 +80,14 @@ export class HomeComponent implements OnInit {
   createForm() {
     this.rForm = this.fb.group({
       'companyName': ['', Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(128)])],
-      'companyAddr': ['', Validators.required],
-      'companyAdminName': ['', Validators.required],
+      'companyAddr': ['', Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(128)])],
+      'companyAdminName': ['', Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(128)])],
       'companyPhone': ['', Validators.required],
-      'companyFax': ['', Validators.required],
-      'companyEmail': ['', Validators.email],
+      'companyFax': '',
       'companyInsurance': ['', Validators.required],
+      'companyEmail': ['', Validators.email],
+      'adminPwd': ['', Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(12)])],
+      'adminCnfrmPwd': ['', Validators.compose([Validators.required, Validators.minLength(6), Validators.maxLength(12)])],
       'users': this.fb.array([this.initUser()])
     });
   }
@@ -111,24 +98,11 @@ export class HomeComponent implements OnInit {
     this.formRoles.forEach(r => roleGroup.addControl(r.id + '', new FormControl('')));
 
     const rv = this.fb.group({
-      name: ['', Validators.required],
+      name: ['', Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(128)])],
       email: ['', Validators.email],
       roles: roleGroup
     });
     return rv;
-  }
-
-  updateRole(index: number, roleIndex: number, roleId: number, checked: boolean) {
-    console.log(index + ' - ' + roleIndex + ' - ' + roleId);
-
-    const users = <FormArray>this.rForm.controls.users;
-    const userRoles = <FormGroup>users.controls[index];
-    const roles = <FormArray>userRoles.controls.roles;
-    console.log(roles);
-
-    roles[roleIndex] = (checked) ? roleId : 0;
-
-    console.log(roles);
   }
 
   addUser() {
@@ -141,7 +115,16 @@ export class HomeComponent implements OnInit {
     control.removeAt(i);
   }
 
-  saveInfo(post: any) {
-    this.companyName = post.companyName;
+  submit(data: any) {
+
+    this.isLoading = true;
+
+    console.log(data);
+    this.evService
+    .saveCompanyInfo(data)
+    .subscribe(
+      /* happy path */ l => this.wasUploaded = true,
+      /* error path */ e => this.errorMessage = e,
+      /* onCompleted */() => this.isLoading = false);
   }
 }

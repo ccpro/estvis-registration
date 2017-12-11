@@ -1,4 +1,4 @@
-<div class="home-page">
+<div class="home-page" *ngIf="!wasUploaded">
 
     <!-- <div class="banner">
         <div class="container">
@@ -9,11 +9,11 @@
         Loading &amp; retrieving data...
     </div>
     <div class="container page" *ngIf="errorMessage">
-        {{ errorMessage}}
+        {{ errorMessage }}
     </div>
 
     <div class="container page" *ngIf="!isLoading && !errorMessage">
-        <form [formGroup]="rForm" (ngSubmit)="saveInfo(rForm.value)">
+        <form [formGroup]="rForm" (ngSubmit)="submit(rForm.value)">
             <div class="border">
 
                 <div class="form-container">
@@ -23,26 +23,38 @@
                 <table border="0" colspacing="1" cellpadding="3" width="100%">
                     <tr>
                         <td align='right' width="30%"><label>company name :</label></td>
-                        <td><input type="text" formControlName="companyName" /></td>
+                        <td>
+                            <input type="text" formControlName="companyName" />
+                            <small [hidden]="rForm.controls['companyName'].valid || (rForm.controls['companyName'].pristine && !rForm.submitted)" class="text-danger">
+                                    company name is required and shoud be between 10 &amp; 128 characters length.
+                                  </small>
+                        </td>
                     </tr>
                     <tr>
                         <td align='right'><label>company address :</label></td>
                         <td>
                             <input type="text" formControlName="companyAddr" />
-                            <!--          <show-errors [control]="companyName"></show-errors>-->
+                            <small [hidden]="rForm.controls['companyAddr'].valid || (rForm.controls['companyAddr'].pristine && !rForm.submitted)" class="text-danger">
+                                    company address is required and shoud be between 10 &amp; 128 characters length.
+                                  </small>
                         </td>
                     </tr>
                     <tr>
                         <td align='right'><label>administrator name :</label></td>
                         <td>
                             <input type="text" formControlName="companyAdminName" />
-                            <!--          <show-errors [control]="companyName"></show-errors>-->
+                            <small [hidden]="rForm.controls['companyAdminName'].valid || (rForm.controls['companyAdminName'].pristine && !rForm.submitted)" class="text-danger">
+                                    company administrator name is required and shoud be between 10 &amp; 128 characters length.
+                                  </small>
                         </td>
                     </tr>
                     <tr>
                         <td align='right'><label>phone :</label></td>
                         <td>
                             <input type="text" formControlName="companyPhone" pattern="^\d{3}-\d{3}-\d{4}$" required />
+                            <small [hidden]="rForm.controls['companyPhone'].valid || (rForm.controls['companyPhone'].pristine && !rForm.submitted)" class="text-danger">
+                                    company phone is required and shoud be <i>xxx-xxx-xxxx</i>.
+                                  </small>
                         </td>
                     </tr>
                     <tr>
@@ -51,17 +63,40 @@
                         </td>
                     </tr>
                     <tr>
-                        <td align='right'><label>email :</label></td>
-                        <td><input type="text" formControlName="companyEmail" /></td>
-                    </tr>
-                    <tr>
                         <td align='right'><label>insurance :</label></td>
                         <td>
                             <select formControlName='companyInsurance' [(ngModel)]="selectedInsurance" ngModel>
-                            <option *ngFor="let insurance of insurances" value={{insurance.id}} [selected]="insurance.id === selectedInsurance.id">
-                              {{insurance.name}}
-                            </option>
-                          </select>
+                                <option *ngFor="let insurance of insurances" value={{insurance.id}} [selected]="insurance.id === selectedInsurance.id">
+                                  {{insurance.name}}
+                                </option>
+                              </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align='right'><label>email :</label></td>
+                        <td>
+                            <input type="email" formControlName="companyEmail" required />
+                            <small [hidden]="rForm.controls['companyEmail'].valid || (rForm.controls['companyEmail'].pristine && !rForm.submitted)" class="text-danger">
+                                    email is required and format should be <i>john@doe.com</i>.
+                                  </small>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align='right'><label>company admin password :</label></td>
+                        <td>
+                            <input type="password" formControlName="adminPwd" required validateEqual="adminCnfrmPwd" reverse="true" />
+                            <small [hidden]="rForm.controls['adminPwd'].valid || (rForm.controls['adminPwd'].pristine && !rForm.submitted)" class="text-danger">
+                                    password is required and should be between 6 and 12 characters long
+                                  </small>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align='right'><label>company admin confirm password :</label></td>
+                        <td>
+                            <input type="password" formControlName="adminCnfrmPwd" required validateEqual="adminPwd" reverse="false" />
+                            <small [hidden]="rForm.controls['adminCnfrmPwd'].valid || (rForm.controls['adminCnfrmPwd'].pristine && !rForm.submitted)" class="text-danger">
+                                pssword mismatch
+                            </small>
                         </td>
                     </tr>
                 </table>
@@ -94,7 +129,9 @@
                                     <td>
                                         <div class="form-group">
                                             <input type="text" class="form-control input-lg" formControlName="name">
-                                            <small [hidden]="rForm.controls.users.controls[i].controls.name.valid" class="text-danger">name is required</small>
+                                            <small [hidden]="rForm.controls.users.controls[i].controls['name'].valid || (rForm.controls.users.controls[i].controls['name'].pristine && !rForm.submitted)" class="text-danger">
+                                                    account name is required and shoud be between 10 &amp; 128 characters length.
+                                                </small>
                                         </div>
                                     </td>
                                     <td align='right' width="20%">
@@ -103,8 +140,9 @@
                                     <td>
                                         <div class="form-group">
                                             <input type="text" class="form-control input-lg" formControlName="email">
-                                            <small [hidden]="rForm.controls.users.controls[i].controls.email.valid" class="text-danger">email is required</small>
-                                        </div>
+                                            <small [hidden]="rForm.controls.users.controls[i].controls['email'].valid || (rForm.controls.users.controls[i].controls['email'].pristine && !rForm.submitted)" class="text-danger">
+                                                    email is required and format should be <i>john@doe.com</i>.
+                                                </small> </div>
                                     </td>
                                     <td valign='top'>
                                         <button class="roundbutton" (click)="removeUser(i)" *ngIf="rForm.controls.users.controls.length > 1">-</button>
@@ -120,7 +158,6 @@
                                                         <input type="checkbox" 
                                                                value="{{role.id}}" 
                                                                name="{{role.id}}" 
-                                                               (change)="updateRole(i, c, role.id, $event.target.checked)"                                                               
                                                                [formControl]="rForm.controls.users.controls[i].controls.roles.controls[role.id]"/> {{role.comment}}
                                                      </label>
                                                 </div>
@@ -141,6 +178,13 @@
             <p>Form status: {{ rForm.status | json }}</p>
             <p>insurances: {{ insurances | json }}</p>
             <p>selected insurance: {{ selectedInsurance | json }}</p>
+            <p>{{ rForm.controls['companyEmail'].valid }}</p>
         </form>
+    </div>
+</div>
+
+<div class="home-page" *ngIf="!wasUploaded">
+    <div class="container page">
+        company info was succesfully uploaded. you will receive email shortly.
     </div>
 </div>

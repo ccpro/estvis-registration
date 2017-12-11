@@ -1,6 +1,6 @@
 import { FormArray } from '@angular/forms';
 
-export class CustomValidators {
+export class CheckboxValidator {
     static multipleCheckboxRequireOneOrMore(fa: FormArray) {
         let valid = false;
 

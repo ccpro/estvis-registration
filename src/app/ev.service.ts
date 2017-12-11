@@ -26,6 +26,12 @@ export class EvService {
     return list;
   }
 
+  saveCompanyInfo(data: any) {
+    const options = new RequestOptions({ headers: this.getHeaders() });
+    return this.http.post(`${this.baseUrl}/ac`, data, options)
+      .catch(handleError);
+  }
+
   private getHeaders() {
     // I included these headers because otherwise FireFox will request text/html
     const headers = new Headers();
