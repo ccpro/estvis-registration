@@ -221,9 +221,9 @@
                                                 <div *ngFor="let role of formRoles; let c = index" class="checkbox">
                                                     <label for="role">
                                                         <input type="checkbox" 
-                                                               value="{{role.id}}" 
-                                                               name="{{role.id}}" 
-                                                               [formControl]="rForm.controls.users.controls[i].controls.roles.controls[role.id]"/> {{role.comment}}
+                                                               value="{{role.name}}" 
+                                                               name="{{role.name}}" 
+                                                               [formControl]="rForm.controls.users.controls[i].controls.roles.controls[role.name]"/> {{role.comment}}
                                                      </label>
                                                 </div>
                                             </div>
