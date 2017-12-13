@@ -21,7 +21,7 @@ const homeRouting: ModuleWithProviders = RouterModule.forChild([
     homeRouting,
     FormsModule,
     ReactiveFormsModule,
-    CommonModule
+    CommonModule,
   ],
   declarations: [
     HomeComponent,

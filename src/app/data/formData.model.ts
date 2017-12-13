@@ -34,4 +34,5 @@ export interface InsuranceInfo {
 export class ConfigInfo {
 	list: InsuranceInfo[];
 	roles: RoleInfo[];
+	states: string[];
 }

@@ -28,7 +28,8 @@ export class EvService {
 
   saveCompanyInfo(data: any) {
     const options = new RequestOptions({ headers: this.getHeaders() });
-    return this.http.post(`${this.baseUrl}/ac`, data, options)
+    return this.http
+      .post(`${this.baseUrl}/ac`, data, options)
       .catch(handleError);
   }
 

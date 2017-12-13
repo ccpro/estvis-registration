@@ -4,9 +4,11 @@ import { Event } from '@angular/router/src/events';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl } from '@angular/forms';
 import { FormsModule, FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+
 import { InsuranceInfo, RoleInfo, UserInfo } from '../data/formData.model';
 import { EvService } from '../ev.service';
 import { UserComponent } from '../user/user.component';
+
 
 @Component({
   selector: 'app-home-page',
@@ -17,6 +19,7 @@ import { UserComponent } from '../user/user.component';
 export class HomeComponent implements OnInit {
 
   insurances: InsuranceInfo[] = [];
+  states: string[] = [];
   formRoles: RoleInfo[] = [];
   selectedInsurance: number;
   errorMessage = '';
@@ -30,7 +33,11 @@ export class HomeComponent implements OnInit {
   // form fields for company
   //
   companyName = '';
-  companyAddr = '';
+  companyAddr1 = '';
+  companyAddr2 = '';
+  companyAddrCity = '';
+  companyAddrState = '';
+  companyAddrZip = '';
   companyAdminName = '';
   companyPhone = '';
   companyFax = '';
@@ -59,6 +66,7 @@ export class HomeComponent implements OnInit {
   private updateValues(v: any) {
     this.insurances = v.list;
     this.formRoles = v.roles;
+    this.states = v.states;
 
     for (let i = 0; i < this.insurances.length; ++i) {
       if (0 === this.insurances[i].id) {
@@ -80,7 +88,11 @@ export class HomeComponent implements OnInit {
   createForm() {
     this.rForm = this.fb.group({
       'companyName': ['', Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(128)])],
-      'companyAddr': ['', Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(128)])],
+      'companyAddr1': ['', Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(128)])],
+      'companyAddr2': [''],
+      'companyCity': ['', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(128)])],
+      'companyState': ['FL', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(2)])],
+      'companyZip': ['', Validators.compose([Validators.required, Validators.minLength(5), Validators.maxLength(5)])],
       'companyAdminName': ['', Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(128)])],
       'companyPhone': ['', Validators.required],
       'companyFax': '',

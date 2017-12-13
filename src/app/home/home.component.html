@@ -22,27 +22,79 @@
 
                 <table border="0" colspacing="1" cellpadding="3" width="100%">
                     <tr>
-                        <td align='right' width="30%"><label>company name :</label></td>
+                        <td align='right'><label>company name :</label></td>
                         <td>
-                            <input type="text" formControlName="companyName" />
+                            <input type="text" formControlName="companyName" class="form-control input-lg" />
+                        </td>
+                        <td align='left' width='25%'>
                             <small [hidden]="rForm.controls['companyName'].valid || (rForm.controls['companyName'].pristine && !rForm.submitted)" class="text-danger">
                                     company name is required and shoud be between 10 &amp; 128 characters length.
                                   </small>
                         </td>
                     </tr>
                     <tr>
-                        <td align='right'><label>company address :</label></td>
+                        <td align='right'><label>company street :</label></td>
                         <td>
-                            <input type="text" formControlName="companyAddr" />
-                            <small [hidden]="rForm.controls['companyAddr'].valid || (rForm.controls['companyAddr'].pristine && !rForm.submitted)" class="text-danger">
-                                    company address is required and shoud be between 10 &amp; 128 characters length.
+                            <input type="text" formControlName="companyAddr1" class="form-control input-lg" />
+                        </td>
+                        <td>
+                            <small [hidden]="rForm.controls['companyAddr1'].valid || (rForm.controls['companyAddr1'].pristine && !rForm.submitted)" class="text-danger">
+                                    company street is required and shoud be between 10 &amp; 128 characters length.
                                   </small>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align='right'></td>
+                        <td>
+                            <input type="text" formControlName="companyAddr2" class="form-control input-lg" />
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align='right'><label>company city :</label></td>
+                        <td>
+                            <input type="text" formControlName="companyCity" class="form-control input-lg" />
+                        </td>
+                        <td>
+                            <small [hidden]="rForm.controls['companyCity'].valid || (rForm.controls['companyCity'].pristine && !rForm.submitted)" class="text-danger">
+                                company city is required and shoud be between 3 &amp; 128 characters length.
+                            </small>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align='right'><label>company state :</label></td>
+                        <td>
+                            <!-- <input type="text" formControlName="companyState" pattern="^\w{2}$" required />
+                            <small [hidden]="rForm.controls['companyState'].valid || (rForm.controls['companyState'].pristine && !rForm.submitted)" class="text-danger">
+                                company state is required.
+                            </small> -->
+                            <select formControlName='companyState' ngModel class="form-control input-lg">
+                                    <option *ngFor="let state of states" value={{state}} [selected]="state === 'FL'">
+                                      {{state}}
+                                    </option>
+                                  </select>
+                        </td>
+                        <td>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td align='right'><label>company zip :</label></td>
+                        <td>
+                            <input type="text" formControlName="companyZip" pattern="^\d{5}$" required class="form-control input-lg" />
+                        </td>
+                        <td>
+                            <small [hidden]="rForm.controls['companyZip'].valid || (rForm.controls['companyZip'].pristine && !rForm.submitted)" class="text-danger">
+                                company zip is required.
+                            </small>
                         </td>
                     </tr>
                     <tr>
                         <td align='right'><label>administrator name :</label></td>
                         <td>
-                            <input type="text" formControlName="companyAdminName" />
+                            <input type="text" formControlName="companyAdminName" class="form-control" />
+                        </td>
+                        <td>
                             <small [hidden]="rForm.controls['companyAdminName'].valid || (rForm.controls['companyAdminName'].pristine && !rForm.submitted)" class="text-danger">
                                     company administrator name is required and shoud be between 10 &amp; 128 characters length.
                                   </small>
@@ -51,7 +103,9 @@
                     <tr>
                         <td align='right'><label>phone :</label></td>
                         <td>
-                            <input type="text" formControlName="companyPhone" pattern="^\d{3}-\d{3}-\d{4}$" required />
+                            <input type="text" formControlName="companyPhone" pattern="^\d{3}-\d{3}-\d{4}$" required class="form-control" />
+                        </td>
+                        <td>
                             <small [hidden]="rForm.controls['companyPhone'].valid || (rForm.controls['companyPhone'].pristine && !rForm.submitted)" class="text-danger">
                                     company phone is required and shoud be <i>xxx-xxx-xxxx</i>.
                                   </small>
@@ -59,23 +113,30 @@
                     </tr>
                     <tr>
                         <td align='right'><label>fax :</label></td>
-                        <td> <input type="text" formControlName="companyFax" pattern="^\d{3}-\d{3}-\d{4}$" />
+                        <td>
+                            <input type="text" formControlName="companyFax" pattern="^\d{3}-\d{3}-\d{4}$" class="form-control" />
+                        </td>
+                        <td>
                         </td>
                     </tr>
                     <tr>
                         <td align='right'><label>insurance :</label></td>
                         <td>
-                            <select formControlName='companyInsurance' [(ngModel)]="selectedInsurance" ngModel>
+                            <select formControlName='companyInsurance' [(ngModel)]="selectedInsurance" ngModel class="form-control input-lg">
                                 <option *ngFor="let insurance of insurances" value={{insurance.id}} [selected]="insurance.id === selectedInsurance.id">
                                   {{insurance.name}}
                                 </option>
                               </select>
                         </td>
+                        <td>
+                        </td>
                     </tr>
                     <tr>
                         <td align='right'><label>email :</label></td>
                         <td>
-                            <input type="email" formControlName="companyEmail" required />
+                            <input type="email" formControlName="companyEmail" required class="form-control input-lg" />
+                        </td>
+                        <td>
                             <small [hidden]="rForm.controls['companyEmail'].valid || (rForm.controls['companyEmail'].pristine && !rForm.submitted)" class="text-danger">
                                     email is required and format should be <i>john@doe.com</i>.
                                   </small>
@@ -84,7 +145,9 @@
                     <tr>
                         <td align='right'><label>company admin password :</label></td>
                         <td>
-                            <input type="password" formControlName="adminPwd" required validateEqual="adminCnfrmPwd" reverse="true" />
+                            <input type="password" formControlName="adminPwd" required validateEqual="adminCnfrmPwd" reverse="true" class="form-control input-lg" />
+                        </td>
+                        <td>
                             <small [hidden]="rForm.controls['adminPwd'].valid || (rForm.controls['adminPwd'].pristine && !rForm.submitted)" class="text-danger">
                                     password is required and should be between 6 and 12 characters long
                                   </small>
@@ -93,9 +156,11 @@
                     <tr>
                         <td align='right'><label>company admin confirm password :</label></td>
                         <td>
-                            <input type="password" formControlName="adminCnfrmPwd" required validateEqual="adminPwd" reverse="false" />
+                            <input type="password" formControlName="adminCnfrmPwd" required validateEqual="adminPwd" reverse="false" class="form-control input-lg" />
+                        </td>
+                        <td>
                             <small [hidden]="rForm.controls['adminCnfrmPwd'].valid || (rForm.controls['adminCnfrmPwd'].pristine && !rForm.submitted)" class="text-danger">
-                                pssword mismatch
+                                password mismatch
                             </small>
                         </td>
                     </tr>
