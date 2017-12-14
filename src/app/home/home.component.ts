@@ -109,7 +109,7 @@ export class HomeComponent implements OnInit {
   initUser() {
 
     const roleGroup = new FormGroup({});
-    this.formRoles.forEach(r => roleGroup.addControl(r.name + '', new FormControl('')));
+    this.formRoles.forEach(r => roleGroup.addControl(r.name, new FormControl('')));
 
     const rv = this.fb.group({
       name: ['', Validators.compose([Validators.required, Validators.minLength(10), Validators.maxLength(128)])],
