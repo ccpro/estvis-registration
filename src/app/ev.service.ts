@@ -8,6 +8,8 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/observable/throw';
 
 import { ConfigInfo } from '../app/data/formData.model';
+import { RegistrationInfo } from '../app/data/registration.model';
+
 import { Console } from '@angular/core/src/console';
 
 @Injectable()
@@ -30,6 +32,7 @@ export class EvService {
     const options = new RequestOptions({ headers: this.getHeaders() });
     return this.http
       .post(`${this.baseUrl}/ac`, data, options)
+      .map(mapRegistrationInfo)
       .catch(handleError);
   }
 
@@ -39,6 +42,10 @@ export class EvService {
     headers.append('Accept', 'application/json');
     return headers;
   }
+}
+
+function mapRegistrationInfo(response: Response): RegistrationInfo {
+  return <RegistrationInfo>response.json();
 }
 
 function mapInsuranceInfoList(response: Response): ConfigInfo {

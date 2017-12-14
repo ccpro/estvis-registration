@@ -8,7 +8,6 @@ import { CommonModule } from '@angular/common';
 
 import { AppComponent } from './app.component';
 import { HomeModule } from './home/home.module';
-import { UserComponent } from './user/user.component';
 import { EvService } from './ev.service';
 
 import {
@@ -22,8 +21,7 @@ const rootRouting: ModuleWithProviders = RouterModule.forRoot([], { useHash: tru
   declarations: [
     AppComponent,
     FooterComponent,
-    HeaderComponent,
-    UserComponent
+    HeaderComponent
   ],
   imports: [
     BrowserModule,

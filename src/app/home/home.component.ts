@@ -4,11 +4,11 @@ import { Event } from '@angular/router/src/events';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormControl } from '@angular/forms';
 import { FormsModule, FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { environment } from '../../environments/environment';
 
 import { InsuranceInfo, RoleInfo, UserInfo } from '../data/formData.model';
+import { RegistrationInfo } from '../data/registration.model';
 import { EvService } from '../ev.service';
-import { UserComponent } from '../user/user.component';
-
 
 @Component({
   selector: 'app-home-page',
@@ -22,9 +22,11 @@ export class HomeComponent implements OnInit {
   states: string[] = [];
   formRoles: RoleInfo[] = [];
   selectedInsurance: number;
-  errorMessage = '';
+  uploadMessage = '';
   isLoading = true;
-  wasUploaded = false;
+  wasPosted = false;
+  uploadStatus = false;
+  workInDev = !environment.production;
 
   rForm: FormGroup;
   post: any;
@@ -59,7 +61,7 @@ export class HomeComponent implements OnInit {
       .getInsuranceList()
       .subscribe(
          /* happy path */ l => this.createFormEx(l),
-         /* error path */ e => this.errorMessage = e,
+         /* error path */ e => this.uploadMessage = e,
          /* onCompleted */() => this.isLoading = false);
   }
 
@@ -129,14 +131,25 @@ export class HomeComponent implements OnInit {
 
   submit(data: any) {
 
-    this.isLoading = true;
-
-    console.log(data);
     this.evService
-    .saveCompanyInfo(data)
-    .subscribe(
-      /* happy path */ l => this.wasUploaded = true,
-      /* error path */ e => this.errorMessage = e,
+      .saveCompanyInfo(data)
+      .subscribe(
+      /* happy path */ l => this.processPost(l),
+      /* error path */ e => this.setError(e),
       /* onCompleted */() => this.isLoading = false);
+  }
+
+  setError(error: string) {
+    this.uploadMessage = error;
+    this.uploadStatus = false;
+  }
+
+  processPost(v: any) {
+    this.wasPosted = true;
+    this.uploadStatus = v.status === 'ok';
+    this.uploadMessage = v.message;
+
+    console.log(v);
+    console.log(this.uploadStatus);
   }
 }
