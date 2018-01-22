@@ -27,7 +27,7 @@
 
                 <table border="0" colspacing="1" cellpadding="3" width="100%">
                     <tr>
-                        <td align='right'><label>company name :</label></td>
+                        <td align='right'><label>name :</label></td>
                         <td>
                             <input type="text" formControlName="companyName" class="form-control input-lg" />
                         </td>
@@ -38,7 +38,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td align='right'><label>company street :</label></td>
+                        <td align='right'><label>street :</label></td>
                         <td>
                             <input type="text" formControlName="companyAddr1" class="form-control input-lg" />
                         </td>
@@ -57,7 +57,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td align='right'><label>company city :</label></td>
+                        <td align='right'><label>city :</label></td>
                         <td>
                             <input type="text" formControlName="companyCity" class="form-control input-lg" />
                         </td>
@@ -68,7 +68,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td align='right'><label>company state :</label></td>
+                        <td align='right'><label>state :</label></td>
                         <td>
                             <select formControlName='companyState' ngModel class="form-control input-lg">
                                     <option *ngFor="let state of states" value={{state}} [selected]="state === 'FL'">
@@ -144,7 +144,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td align='right'><label>company admin password :</label></td>
+                        <td align='right'><label>admin password :</label></td>
                         <td>
                             <input type="password" formControlName="adminPwd" required validateEqual="adminCnfrmPwd" reverse="true" class="form-control input-lg" />
                         </td>
@@ -155,7 +155,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td align='right'><label>company admin confirm password :</label></td>
+                        <td align='right'><label>admin confirm password :</label></td>
                         <td>
                             <input type="password" formControlName="adminCnfrmPwd" required validateEqual="adminPwd" reverse="false" class="form-control input-lg" />
                         </td>
@@ -173,7 +173,7 @@
             <div class="border">
 
                 <div class="form-container">
-                    <h2>accounts &amp; roles</h2>
+                    <h2>users</h2>
                 </div>
                 <div formArrayName="users">
                     <div *ngFor="let user of rForm.controls.users.controls; let i=index">
